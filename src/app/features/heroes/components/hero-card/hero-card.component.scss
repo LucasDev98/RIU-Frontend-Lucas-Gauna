@@ -1,0 +1,45 @@
+.hero-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.hero-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.hero-power {
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.universe-chip {
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.universe-marvel {
+  background-color: #e23636 !important;
+  color: white !important;
+}
+
+.universe-dc {
+  background-color: #0074e4 !important;
+  color: white !important;
+}
+
+.universe-other {
+  background-color: #6c757d !important;
+  color: white !important;
+}

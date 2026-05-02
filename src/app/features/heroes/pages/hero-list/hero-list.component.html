@@ -1,0 +1,17 @@
+<div class="hero-list-container">
+  <div class="heroes-grid">
+    @for (hero of pagedHeroes(); track hero.id) {
+      <app-hero-card
+        [hero]="hero"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+      />
+    }
+  </div>
+
+  <app-paginator
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</div>
