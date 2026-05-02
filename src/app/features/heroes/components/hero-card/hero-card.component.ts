@@ -1,6 +1,6 @@
 import { Component, input, output, computed } from '@angular/core';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
-import { Hero, HeroUniverse } from '../../../../core/models/hero.model';
+import { DEFAULT_HERO_IMAGE, Hero, HeroUniverse } from '../../../../core/models/hero.model';
 
 const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
   Marvel: 'universe-marvel',
@@ -16,6 +16,7 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
   styleUrl: './hero-card.component.scss',
 })
 export class HeroCardComponent {
+  readonly defaultImage = DEFAULT_HERO_IMAGE;
   readonly hero = input.required<Hero>();
   readonly view = output<Hero>();
   readonly edit = output<Hero>();

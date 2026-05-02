@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 import { HERO_MOCKS } from '../../mocks/hero.mock';
-import { HeroUniverse } from '../../../../core/models/hero.model';
+import { DEFAULT_HERO_IMAGE, HeroUniverse } from '../../../../core/models/hero.model';
 
 const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
   Marvel: 'universe-marvel',
@@ -19,6 +19,7 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
   styleUrl: './hero-detail.component.scss',
 })
 export class HeroDetailComponent {
+  readonly defaultImage = DEFAULT_HERO_IMAGE;
   private readonly router = inject(Router);
 
   readonly id = input.required<string>();

@@ -1,7 +1,7 @@
 @let currentHero = hero();
 
 <mat-card class="hero-card" (click)="view.emit(currentHero)">
-  <img mat-card-image [src]="currentHero.imageUrl" [alt]="currentHero.name" class="hero-image" />
+  <img mat-card-image [src]="currentHero.imageUrl || defaultImage" [alt]="currentHero.name" class="hero-image" />
 
   <mat-card-header>
     <mat-card-title>{{ currentHero.name }}</mat-card-title>

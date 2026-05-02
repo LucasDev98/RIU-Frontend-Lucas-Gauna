@@ -16,7 +16,7 @@
       <div class="detail-layout">
 
         <div class="detail-image-wrapper">
-          <img [src]="currentHero.imageUrl" [alt]="currentHero.name" class="detail-image" />
+          <img [src]="currentHero.imageUrl || defaultImage" [alt]="currentHero.name" class="detail-image" />
         </div>
 
         <div class="detail-info">

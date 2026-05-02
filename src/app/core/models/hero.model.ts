@@ -1,12 +1,14 @@
 export type HeroUniverse = 'Marvel' | 'DC' | 'Other';
 
+export const DEFAULT_HERO_IMAGE = '/images/no-image.png';
+
 export interface Hero {
   readonly id: string;
   name: string;
   alias: string;
   power: string;
   universe: HeroUniverse;
-  imageUrl: string;
+  imageUrl?: string;
   readonly createdAt: string;
   updatedAt: string;
 }
