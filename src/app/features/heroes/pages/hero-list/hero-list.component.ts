@@ -32,6 +32,10 @@ export class HeroListComponent {
     this.pageSize.set(event.pageSize);
   }
 
+  onView(hero: Hero): void {
+    this.router.navigate(['/heroes', hero.id]);
+  }
+
   onEdit(hero: Hero): void {
     this.router.navigate(['/heroes', hero.id, 'edit']);
   }

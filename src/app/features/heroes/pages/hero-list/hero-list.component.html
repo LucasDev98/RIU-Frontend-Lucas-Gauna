@@ -3,6 +3,7 @@
     @for (hero of pagedHeroes(); track hero.id) {
       <app-hero-card
         [hero]="hero"
+        (view)="onView($event)"
         (edit)="onEdit($event)"
         (delete)="onDelete($event)"
       />

@@ -1,0 +1,58 @@
+@if (hero(); as currentHero) {
+  <div class="detail-container">
+
+    <div class="detail-actions">
+      <button mat-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back
+      </button>
+      <button mat-flat-button (click)="goToEdit()">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+    </div>
+
+    <mat-card class="detail-card">
+      <div class="detail-layout">
+
+        <div class="detail-image-wrapper">
+          <img [src]="currentHero.imageUrl" [alt]="currentHero.name" class="detail-image" />
+        </div>
+
+        <div class="detail-info">
+          <div class="detail-header">
+            <h1 class="hero-name">{{ currentHero.name }}</h1>
+            <mat-chip [class]="universeClass()">{{ currentHero.universe }}</mat-chip>
+          </div>
+
+          <mat-divider />
+
+          <div class="detail-fields">
+            <div class="detail-field">
+              <span class="field-label">Alias</span>
+              <span class="field-value">{{ currentHero.alias }}</span>
+            </div>
+
+            <div class="detail-field">
+              <span class="field-label">Power</span>
+              <span class="field-value">{{ currentHero.power }}</span>
+            </div>
+
+            <div class="detail-field">
+              <span class="field-label">Added</span>
+              <span class="field-value">{{ currentHero.createdAt | date: 'mediumDate' }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </mat-card>
+
+  </div>
+} @else {
+  <div class="not-found">
+    <mat-icon class="not-found-icon">search_off</mat-icon>
+    <h2>Hero not found</h2>
+    <button mat-flat-button (click)="goBack()">Go back to list</button>
+  </div>
+}

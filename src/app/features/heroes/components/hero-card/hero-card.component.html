@@ -1,6 +1,6 @@
 @let currentHero = hero();
 
-<mat-card class="hero-card">
+<mat-card class="hero-card" (click)="view.emit(currentHero)">
   <img mat-card-image [src]="currentHero.imageUrl" [alt]="currentHero.name" class="hero-image" />
 
   <mat-card-header>
@@ -18,10 +18,10 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <button mat-icon-button matTooltip="Edit" (click)="edit.emit(currentHero)">
+    <button mat-icon-button matTooltip="Edit" (click)="edit.emit(currentHero); $event.stopPropagation()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button matTooltip="Delete" color="warn" (click)="delete.emit(currentHero)">
+    <button mat-icon-button matTooltip="Delete" color="warn" (click)="delete.emit(currentHero); $event.stopPropagation()">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-actions>

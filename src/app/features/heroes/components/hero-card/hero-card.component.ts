@@ -17,6 +17,7 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
 })
 export class HeroCardComponent {
   readonly hero = input.required<Hero>();
+  readonly view = output<Hero>();
   readonly edit = output<Hero>();
   readonly delete = output<Hero>();
 
