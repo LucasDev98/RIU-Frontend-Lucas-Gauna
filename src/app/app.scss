@@ -1,0 +1,50 @@
+.app-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.toolbar-page-title {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.sidenav-container {
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.app-sidenav {
+  width: 220px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+
+  .active-link {
+    background-color: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    border-radius: 0 50px 50px 0;
+    font-weight: 600;
+  }
+}
+
+.sidenav-content {
+  padding: 24px;
+  overflow-y: auto;
+}
