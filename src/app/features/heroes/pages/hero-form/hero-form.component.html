@@ -1,0 +1,73 @@
+﻿<div class="form-container">
+
+  <div class="form-actions-top">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ pageLabel() }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="hero-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" appUppercaseInput placeholder="e.g. SPIDERMAN" />
+          @if (hasError('name', 'required')) {
+            <mat-error>Name is required</mat-error>
+          } @else if (hasError('name', 'minlength')) {
+            <mat-error>At least 2 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Alias</mat-label>
+          <input matInput formControlName="alias" placeholder="e.g. Peter Parker" />
+          @if (hasError('alias', 'required')) {
+            <mat-error>Alias is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Power</mat-label>
+          <textarea matInput formControlName="power" rows="3" placeholder="Describe the hero abilities"></textarea>
+          @if (hasError('power', 'required')) {
+            <mat-error>Power is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Universe</mat-label>
+          <mat-select formControlName="universe">
+            @for (universe of universes; track universe) {
+              <mat-option [value]="universe">{{ universe }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Image URL</mat-label>
+          <input matInput formControlName="imageUrl" placeholder="https://..." />
+          <mat-hint>Optional — a placeholder will be used if left empty</mat-hint>
+          @if (hasError('imageUrl', 'pattern')) {
+            <mat-error>Must be a valid URL (http/https)</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="goBack()">Cancel</button>
+          <button mat-flat-button type="submit">
+            {{ isEditMode() ? 'Save Changes' : 'Add Hero' }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

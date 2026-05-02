@@ -1,0 +1,35 @@
+.form-container {
+  padding: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.form-actions-top {
+  margin-bottom: 24px;
+}
+
+.form-card {
+  border-radius: 16px;
+
+  mat-card-header {
+    margin-bottom: 8px;
+  }
+}
+
+.hero-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
