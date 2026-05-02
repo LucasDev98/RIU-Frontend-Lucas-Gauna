@@ -1,7 +1,7 @@
 ﻿import { Injectable, computed, inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs';
+import { filter } from 'rxjs';
 
 export interface NavItem {
   label: string;
@@ -9,12 +9,12 @@ export interface NavItem {
   route: string;
 }
 
-const ROUTE_TITLES: Record<string, string> = {
-  '/heroes': 'Heroes',
-  '/heroes/new': 'Add Hero',
+type Data = {
+  title?: string;
 };
 
-/** Singleton service that owns navigation items and resolves the active page title. */
+const DEFAULT_TITLE = 'HeroApp';
+
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
   private readonly router = inject(Router);
@@ -24,17 +24,22 @@ export class NavigationService {
     { label: 'Add Hero', icon: 'add_circle', route: '/heroes/new' },
   ];
 
-  private readonly currentUrl = toSignal(
+  private readonly navEnd = toSignal(
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(event => (event as NavigationEnd).urlAfterRedirects)
-    ),
-    { initialValue: this.router.url }
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    )
   );
 
+  private lastChild(route: ActivatedRoute): ActivatedRoute {
+    return route.firstChild ? this.lastChild(route.firstChild) : route;
+  }
+
   readonly pageTitle = computed(() => {
-    const url = this.currentUrl();
-    if (url.includes('/edit')) return 'Edit Hero';
-    return ROUTE_TITLES[url] ?? 'Heroes';
+    this.navEnd();
+
+    const route = this.lastChild(this.router.routerState.root);
+    const { title } = route.snapshot.data as Data;
+
+    return title ?? DEFAULT_TITLE;
   });
 }
