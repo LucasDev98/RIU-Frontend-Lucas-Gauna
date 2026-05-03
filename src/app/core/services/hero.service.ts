@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   CreateHeroDto,
   Hero,
@@ -17,13 +17,21 @@ export class HeroService {
   getAll(params: HeroPageParams): Observable<HeroPaginatedResponse> {
     let httpParams = new HttpParams()
       .set('_page', params.page)
-      .set('_per_page', params.perPage);
+      .set('_limit', params.perPage);
 
     if (params.name) {
       httpParams = httpParams.set('name_like', params.name);
     }
 
-    return this.http.get<HeroPaginatedResponse>(this.baseUrl, { params: httpParams });
+    return this.http
+      .get<Hero[]>(this.baseUrl, { params: httpParams, observe: 'response' })
+      .pipe(
+        map(response => ({
+          data: response.body ?? [],
+          items: Number(response.headers.get('X-Total-Count') ?? 0),
+          pages: 0,
+        }))
+      );
   }
 
   getById(id: string): Observable<Hero> {

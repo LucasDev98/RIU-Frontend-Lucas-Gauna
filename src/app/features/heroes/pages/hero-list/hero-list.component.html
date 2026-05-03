@@ -7,25 +7,40 @@
   </mat-form-field>
 
   <div class="heroes-grid">
-    @for (hero of store.heroes(); track hero.id) {
-      <app-hero-card
-        [hero]="hero"
-        (view)="onView($event)"
-        (edit)="onEdit($event)"
-        (delete)="onDelete($event)"
-      />
-    } @empty {
-      <div class="empty-state">
-        <mat-icon class="empty-icon">sentiment_dissatisfied</mat-icon>
-        <p>{{ store.filterQuery() ? 'No heroes match your search.' : 'No heroes yet.' }}</p>
-        @if (!store.filterQuery()) {
-          <button mat-flat-button (click)="onAddHero()">
-            <mat-icon>add</mat-icon>
-            Add your first hero
-          </button>
-        }
-      </div>
+
+    @if (store.isLoading()) {
+      @for (item of skeletons; track item) {
+        <div class="skeleton-card">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line wide"></div>
+            <div class="skeleton-line medium"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        </div>
+      }
+    } @else {
+      @for (hero of store.heroes(); track hero.id) {
+        <app-hero-card
+          [hero]="hero"
+          (view)="onView($event)"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        />
+      } @empty {
+        <div class="empty-state">
+          <mat-icon class="empty-icon">sentiment_dissatisfied</mat-icon>
+          <p>{{ store.filterQuery() ? 'No heroes match your search.' : 'No heroes yet.' }}</p>
+          @if (!store.filterQuery()) {
+            <button mat-flat-button (click)="onAddHero()">
+              <mat-icon>add</mat-icon>
+              Add your first hero
+            </button>
+          }
+        </div>
+      }
     }
+
   </div>
 
   <app-paginator

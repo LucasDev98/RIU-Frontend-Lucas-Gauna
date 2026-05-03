@@ -17,6 +17,7 @@ import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 export class HeroListComponent {
   private readonly router = inject(Router);
   protected readonly store = inject(HeroListStore);
+  readonly skeletons = Array(this.store.pageSize());
 
   onFilterChange(query: string): void {
     this.store.setFilter(query);

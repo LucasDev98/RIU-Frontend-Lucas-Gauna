@@ -1,9 +1,10 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, debounceTime, switchMap } from 'rxjs';
-import { Hero, HeroPaginatedResponse } from '../../../../core/models/hero.model';
-import { HeroService } from '../../../../core/services/hero.service';
-import { PageChange } from '../../../../shared/components/paginator/paginator.component';
+import { MatDialog } from '@angular/material/dialog';
+import { combineLatest, debounceTime, filter, finalize, switchMap } from 'rxjs';
+import { Hero, HeroPaginatedResponse } from '../../../../core/models';
+import { HeroService, NotificationService } from '../../../../core/services';
+import { ConfirmDialogComponent, PageChange } from '../../../../shared/components';
 
 const EMPTY_PAGE: Readonly<HeroPaginatedResponse> = {
   data: [],
@@ -17,11 +18,16 @@ const EMPTY_PAGE: Readonly<HeroPaginatedResponse> = {
 @Injectable()
 export class HeroListStore {
   private readonly heroService = inject(HeroService);
+  private readonly notification = inject(NotificationService);
+  private readonly dialog = inject(MatDialog);
 
   readonly filterQuery = signal('');
   readonly pageIndex = signal(0);
   readonly pageSize = signal(5);
   private readonly refreshCounter = signal(0);
+  private readonly _loading = signal(true);
+
+  readonly isLoading = this._loading.asReadonly();
 
   private readonly heroPage = toSignal(
     combineLatest({
@@ -30,13 +36,14 @@ export class HeroListStore {
       pageSize: toObservable(this.pageSize),
       refresh: toObservable(this.refreshCounter),
     }).pipe(
-      switchMap(({ filter, pageIndex, pageSize }) =>
-        this.heroService.getAll({
+      switchMap(({ filter, pageIndex, pageSize }) => {
+        this._loading.set(true);
+        return this.heroService.getAll({
           page: pageIndex + 1,
           perPage: pageSize,
           name: filter || undefined,
-        })
-      )
+        }).pipe(finalize(() => this._loading.set(false)));
+      })
     ),
     { initialValue: EMPTY_PAGE }
   );
@@ -55,9 +62,27 @@ export class HeroListStore {
   }
 
   remove(hero: Hero): void {
-    this.heroService.remove(hero.id).subscribe({
-      next: () => this.refreshCounter.update(counter => counter + 1),
-      error: () => console.error('Failed to delete hero'),
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Delete Hero',
+        message: `Are you sure you want to delete ${hero.name}?`,
+        confirmLabel: 'Delete',
+      },
     });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter(confirmed => !!confirmed),
+        switchMap(() => this.heroService.remove(hero.id))
+      )
+      .subscribe({
+        next: () => {
+          this.notification.success(`${hero.name} deleted successfully.`);
+          this.refreshCounter.update(counter => counter + 1);
+        },
+        error: () => this.notification.error('Failed to delete hero.'),
+      });
   }
 }

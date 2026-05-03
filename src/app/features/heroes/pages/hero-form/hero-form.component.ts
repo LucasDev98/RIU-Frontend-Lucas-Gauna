@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 import { UppercaseInputDirective } from '../../../../shared/directives/uppercase-input.directive';
-import { HERO_MOCKS } from '../../mocks/hero.mock';
+import { HeroService } from '../../../../core/services/hero.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 import { HERO_UNIVERSES, HeroUniverse } from '../../../../core/models/hero.model';
 
 interface HeroFormGroup {
@@ -24,6 +25,8 @@ interface HeroFormGroup {
 export class HeroFormComponent {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly heroService = inject(HeroService);
+  private readonly notification = inject(NotificationService);
 
   readonly id = input<string>();
   readonly universes = HERO_UNIVERSES;
@@ -46,15 +49,14 @@ export class HeroFormComponent {
       const id = this.id();
       if (!id) return;
 
-      const hero = HERO_MOCKS.find(hero => hero.id === id);
-      if (!hero) return;
-
-      this.form.patchValue({
-        name: hero.name,
-        alias: hero.alias,
-        power: hero.power,
-        universe: hero.universe,
-        imageUrl: hero.imageUrl ?? '',
+      this.heroService.getById(id).subscribe(hero => {
+        this.form.patchValue({
+          name: hero.name,
+          alias: hero.alias,
+          power: hero.power,
+          universe: hero.universe,
+          imageUrl: hero.imageUrl ?? '',
+        });
       });
     });
   }
@@ -65,7 +67,21 @@ export class HeroFormComponent {
       return;
     }
 
-    this.router.navigate(['/heroes']);
+    const value = this.form.getRawValue();
+    const id = this.id();
+
+    const action$ = id
+      ? this.heroService.update(id, value)
+      : this.heroService.create(value);
+
+    action$.subscribe({
+      next: hero => {
+        const msg = id ? `${hero.name} updated successfully.` : `${hero.name} created successfully.`;
+        this.notification.success(msg);
+        this.router.navigate(['/heroes']);
+      },
+      error: () => this.notification.error('Operation failed. Please try again.'),
+    });
   }
 
   goBack(): void {

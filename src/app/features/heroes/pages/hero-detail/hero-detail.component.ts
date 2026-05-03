@@ -1,8 +1,10 @@
 ﻿import { Component, computed, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
-import { HERO_MOCKS } from '../../mocks/hero.mock';
+import { HeroService } from '../../../../core/services/hero.service';
 import { DEFAULT_HERO_IMAGE, HeroUniverse } from '../../../../core/models/hero.model';
 
 const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
@@ -21,11 +23,14 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
 export class HeroDetailComponent {
   readonly defaultImage = DEFAULT_HERO_IMAGE;
   private readonly router = inject(Router);
+  private readonly heroService = inject(HeroService);
 
   readonly id = input.required<string>();
 
-  readonly hero = computed(() =>
-    HERO_MOCKS.find(hero => hero.id === this.id())
+  readonly hero = toSignal(
+    toObservable(this.id).pipe(
+      switchMap(id => this.heroService.getById(id))
+    )
   );
 
   readonly universeClass = computed(() => {
