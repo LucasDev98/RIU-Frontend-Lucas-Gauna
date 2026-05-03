@@ -24,6 +24,15 @@
   letter-spacing: 0.05em;
 }
 
+.global-loading-bar {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  height: 3px;
+}
+
 .sidenav-container {
   position: fixed;
   top: 64px;

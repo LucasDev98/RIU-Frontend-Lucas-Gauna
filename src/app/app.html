@@ -10,6 +10,10 @@
   <span class="app-title">HeroApp</span>
 </mat-toolbar>
 
+@if (loadingService.isLoading()) {
+  <mat-progress-bar class="global-loading-bar" mode="indeterminate" />
+}
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     class="app-sidenav"
