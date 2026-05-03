@@ -17,4 +17,16 @@ export type CreateHeroDto = Omit<Hero, 'id' | 'createdAt' | 'updatedAt'>;
 
 export type UpdateHeroDto = Partial<CreateHeroDto>;
 
+export interface HeroPaginatedResponse {
+  data: Hero[];
+  items: number;
+  pages: number;
+}
+
+export interface HeroPageParams {
+  page: number;
+  perPage: number;
+  name?: string;
+}
+
 export const HERO_UNIVERSES: HeroUniverse[] = ['Marvel', 'DC', 'Other'];

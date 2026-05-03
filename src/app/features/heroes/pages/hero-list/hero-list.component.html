@@ -1,18 +1,37 @@
 <div class="hero-list-container">
+
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search hero</mat-label>
+    <input matInput [value]="store.filterQuery()" (input)="onFilterChange($any($event.target).value)" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
   <div class="heroes-grid">
-    @for (hero of pagedHeroes(); track hero.id) {
+    @for (hero of store.heroes(); track hero.id) {
       <app-hero-card
         [hero]="hero"
         (view)="onView($event)"
         (edit)="onEdit($event)"
         (delete)="onDelete($event)"
       />
+    } @empty {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">sentiment_dissatisfied</mat-icon>
+        <p>{{ store.filterQuery() ? 'No heroes match your search.' : 'No heroes yet.' }}</p>
+        @if (!store.filterQuery()) {
+          <button mat-flat-button (click)="onAddHero()">
+            <mat-icon>add</mat-icon>
+            Add your first hero
+          </button>
+        }
+      </div>
     }
   </div>
 
   <app-paginator
-    [totalItems]="totalItems()"
-    [pageSize]="pageSize()"
+    [totalItems]="store.totalItems()"
+    [pageSize]="store.pageSize()"
     (pageChange)="onPageChange($event)"
   />
+
 </div>
