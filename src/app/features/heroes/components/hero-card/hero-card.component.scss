@@ -13,9 +13,13 @@
   }
 }
 
-.hero-image {
-  width: 100%;
+.hero-image-wrapper {
+  position: relative;
   height: 200px;
+  overflow: hidden;
+}
+
+.hero-image {
   object-fit: cover;
 }
 

@@ -1,7 +1,15 @@
 @let currentHero = hero();
 
 <mat-card class="hero-card" (click)="view.emit(currentHero)">
-  <img mat-card-image [src]="currentHero.imageUrl || defaultImage" [alt]="currentHero.name" class="hero-image" />
+  <div class="hero-image-wrapper">
+    <img
+      [ngSrc]="imageSrc()"
+      [alt]="currentHero.name"
+      fill
+      class="hero-image"
+      (error)="onImageError()"
+    />
+  </div>
 
   <mat-card-header>
     <mat-card-title>{{ currentHero.name }}</mat-card-title>
