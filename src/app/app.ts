@@ -26,7 +26,7 @@ export class App {
   readonly sidenavOpen = signal(true);
 
   readonly isHandset = toSignal(
-    this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches)),
+    this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(({ matches }) => matches)),
     { initialValue: false }
   );
 

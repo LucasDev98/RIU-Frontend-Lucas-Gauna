@@ -1,8 +1,9 @@
 ﻿import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap, catchError, of } from 'rxjs';
+import { switchMap, catchError, of, map } from 'rxjs';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 import { HeroService, SeoService } from '../../../../core/services';
 import { DEFAULT_HERO_IMAGE, HeroUniverse } from '../../../../core/models/hero.model';
@@ -27,8 +28,14 @@ export class HeroDetailComponent {
   private readonly router = inject(Router);
   private readonly heroService = inject(HeroService);
   private readonly seoService = inject(SeoService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
 
   readonly id = input.required<string>();
+
+  readonly isHandset = toSignal(
+    this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(({ matches }) => matches)),
+    { initialValue: false }
+  );
 
   readonly hero = toSignal(
     toObservable(this.id).pipe(

@@ -13,7 +13,7 @@
     </div>
 
     <mat-card class="detail-card">
-      <div class="detail-layout">
+      <div class="detail-layout" [class.detail-layout--mobile]="isHandset()">
 
         <div class="detail-image-wrapper">
           <img [src]="currentHero.imageUrl || defaultImage" [alt]="currentHero.name" class="detail-image" />

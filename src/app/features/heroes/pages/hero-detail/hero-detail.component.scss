@@ -20,7 +20,7 @@
   grid-template-columns: 320px 1fr;
   gap: 0;
 
-  @media (max-width: 768px) {
+  &--mobile {
     grid-template-columns: 1fr;
   }
 }
