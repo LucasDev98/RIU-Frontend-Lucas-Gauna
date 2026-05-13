@@ -1,7 +1,12 @@
 ﻿import { Component, computed, effect, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { UppercaseInputDirective } from '../../../../shared/directives/uppercase-input.directive';
 import { HeroService } from '../../../../core/services/hero.service';
 import { NotificationService } from '../../../../core/services/notification.service';
@@ -18,7 +23,7 @@ interface HeroFormGroup {
 @Component({
   selector: 'app-hero-form',
   standalone: true,
-  imports: [...MATERIAL_IMPORTS, ReactiveFormsModule, UppercaseInputDirective],
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, UppercaseInputDirective],
   templateUrl: './hero-form.component.html',
   styleUrl: './hero-form.component.scss',
 })

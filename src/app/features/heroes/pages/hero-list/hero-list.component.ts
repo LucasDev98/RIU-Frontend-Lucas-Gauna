@@ -2,14 +2,17 @@
 import { Router } from '@angular/router';
 import { Hero } from '../../../../core/models/hero.model';
 import { HeroListStore } from './hero-list.store';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { HeroCardComponent } from '../../components/hero-card/hero-card.component';
 import { PaginatorComponent, PageChange } from '../../../../shared/components/paginator/paginator.component';
-import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 
 @Component({
   selector: 'app-hero-list',
   standalone: true,
-  imports: [HeroCardComponent, PaginatorComponent, ...MATERIAL_IMPORTS],
+  imports: [HeroCardComponent, PaginatorComponent, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss',
   providers: [HeroListStore],

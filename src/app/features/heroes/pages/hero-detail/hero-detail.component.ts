@@ -4,7 +4,11 @@ import { DatePipe } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap, catchError, of, map } from 'rxjs';
-import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 import { HeroService, SeoService } from '../../../../core/services';
 import { DEFAULT_HERO_IMAGE, HeroUniverse } from '../../../../core/models/hero.model';
 
@@ -17,7 +21,7 @@ const UNIVERSE_CLASS_MAP: Readonly<Record<HeroUniverse, string>> = {
 @Component({
   selector: 'app-hero-detail',
   standalone: true,
-  imports: [...MATERIAL_IMPORTS, DatePipe],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatChipsModule, MatDividerModule, DatePipe],
   templateUrl: './hero-detail.component.html',
   styleUrl: './hero-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

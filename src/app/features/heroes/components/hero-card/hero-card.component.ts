@@ -1,6 +1,10 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DEFAULT_HERO_IMAGE, Hero, HeroUniverse } from '../../../../core/models/hero.model';
 
 const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
@@ -12,7 +16,7 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
 @Component({
   selector: 'app-hero-card',
   standalone: true,
-  imports: [...MATERIAL_IMPORTS, NgOptimizedImage],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, MatChipsModule, MatTooltipModule, NgOptimizedImage],
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

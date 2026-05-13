@@ -4,14 +4,18 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 
-import { MATERIAL_IMPORTS } from './shared/material.imports';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { LoadingService, NavigationService, SeoService } from './core/services';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ...MATERIAL_IMPORTS, SidenavComponent],
+  imports: [RouterOutlet, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatProgressBarModule, SidenavComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
