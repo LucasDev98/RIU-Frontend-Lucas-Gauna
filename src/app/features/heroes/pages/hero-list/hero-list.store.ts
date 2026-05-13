@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { combineLatest, debounceTime, filter, finalize, switchMap } from 'rxjs';
+import { combineLatest, debounceTime, filter, finalize, switchMap, take } from 'rxjs';
 import { Hero, HeroPaginatedResponse } from '../../../../core/models';
 import { HeroService, NotificationService } from '../../../../core/services';
 import { ConfirmDialogComponent, PageChange } from '../../../../shared/components';
@@ -74,6 +74,7 @@ export class HeroListStore {
     dialogRef
       .afterClosed()
       .pipe(
+        take(1),
         filter(confirmed => !!confirmed),
         switchMap(() => this.heroService.remove(hero.id))
       )
