@@ -1,4 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Hero } from '../../../../core/models/hero.model';
 import { HeroListStore } from './hero-list.store';
@@ -13,6 +13,7 @@ import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss',
   providers: [HeroListStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroListComponent {
   private readonly router = inject(Router);

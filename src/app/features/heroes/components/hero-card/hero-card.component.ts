@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { MATERIAL_IMPORTS } from '../../../../shared/material.imports';
 import { DEFAULT_HERO_IMAGE, Hero, HeroUniverse } from '../../../../core/models/hero.model';
 
@@ -15,6 +15,7 @@ const UNIVERSE_CLASS_MAP: Record<HeroUniverse, string> = {
   imports: [...MATERIAL_IMPORTS, NgOptimizedImage],
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroCardComponent {
   readonly hero = input.required<Hero>();

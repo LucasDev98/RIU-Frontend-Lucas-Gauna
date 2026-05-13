@@ -1,4 +1,4 @@
-﻿import { Component, computed, effect, inject, input } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -19,6 +19,7 @@ const UNIVERSE_CLASS_MAP: Readonly<Record<HeroUniverse, string>> = {
   imports: [...MATERIAL_IMPORTS, DatePipe],
   templateUrl: './hero-detail.component.html',
   styleUrl: './hero-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroDetailComponent {
   readonly defaultImage = DEFAULT_HERO_IMAGE;
